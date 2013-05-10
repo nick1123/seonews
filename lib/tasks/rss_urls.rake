@@ -15,7 +15,7 @@ namespace :rss_urls do
   task :crawl => :environment do
     urls = ::RssUrl.all.map {|rss_url| rss_url.url}
 
-    
+    url_crawler = UrlCrawler.new 
     urls[0..0].each do |url|
       puts url
     end

@@ -1,7 +1,7 @@
 require 'uri'                                                                      
 require 'open-uri'
 
-class CrawlUrl
+class UrlCrawler
   def crawl(url)
     begin 
       html_content = nil
