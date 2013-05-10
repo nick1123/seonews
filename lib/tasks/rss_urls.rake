@@ -15,9 +15,16 @@ namespace :rss_urls do
   task :crawl => :environment do
     urls = ::RssUrl.all.map {|rss_url| rss_url.url}
 
-    url_crawler = UrlCrawler.new 
+    url_crawler = UrlCrawler.new
+    url_extractor = UrlExtractor.new 
+    url_validator = UrlValidator.new
     urls[0..0].each do |url|
-      puts url
+      html_content, final_url = url_crawler.crawl(url)
+      urls_extracted = url_extractor.from_rss_feed(html_content)
+      urls_extracted = url_validator.scrub_rss_feed(urls_extracted)
+      puts "***"
+      puts urls_extracted
+      puts urls_extracted.size
     end
   end
 end
