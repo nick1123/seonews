@@ -14,6 +14,10 @@ namespace :rss_urls do
   desc "crawl rss feeds and look for new urls"
   task :crawl => :environment do
     urls = ::RssUrl.all.map {|rss_url| rss_url.url}
-    puts urls.inspect
+
+    
+    urls[0..0].each do |url|
+      puts url
+    end
   end
 end
