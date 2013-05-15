@@ -11,29 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510214133) do
+ActiveRecord::Schema.define(:version => 20130515165423) do
 
   create_table "crawled_urls", :force => true do |t|
     t.string   "url"
-    t.boolean  "is_processed"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "processed_urls", :force => true do |t|
-    t.integer  "crawled_url_id"
-    t.string   "url"
     t.string   "domain"
     t.string   "title"
-    t.boolean  "had_problem",    :default => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.boolean  "had_problem",  :default => false
+    t.boolean  "is_processed", :default => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
-  create_table "rss_urls", :force => true do |t|
+  create_table "twitter_urls", :force => true do |t|
     t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "crawled",    :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
 end
