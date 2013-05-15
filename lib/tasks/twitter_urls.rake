@@ -60,5 +60,7 @@ namespace :twitter_urls do
       
       puts ""
     end
+
+    puts "#{CrawledUrl.count} Crawled Urls"
   end
 end
