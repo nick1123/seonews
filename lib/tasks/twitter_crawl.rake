@@ -1,6 +1,6 @@
-namespace :twitter_urls do
+namespace :twitter_crawl do
   desc "crawl twitter profiles and look for new urls"
-  task :crawl_profile => :environment do
+  task :profiles => :environment do
     handles = [
       "problogger",
       "DannyIny",
@@ -26,11 +26,14 @@ namespace :twitter_urls do
   end
 
   desc "crawl twitter urls"
-  task :crawl_urls => :environment do
+  task :urls => :environment do
     url_crawler = UrlCrawler.new
     url_validator = UrlValidator.new
     html_extractor = HtmlExtractor.new
-    TwitterUrl.where(:crawled => false).shuffle.each do |tu|
+    #TwitterUrl.where(:crawled => false).shuffle.each do |tu|
+    tus = TwitterUrl.where(:crawled => false)
+    tus_size = tus.size
+    tus.shuffle[0..9].each_with_index do |tu, index|
       begin
         html_content, final_url = url_crawler.crawl(tu.url)
         
@@ -40,14 +43,16 @@ namespace :twitter_urls do
 
         title = html_extractor.title(html_content)
 
-        puts tu.id
-        puts title
-        puts final_url
         if CrawledUrl.where(:url => final_url).blank?
-          CrawledUrl.create(:url => final_url, :title => title)
-          puts "*** new record created"
+          cu = CrawledUrl.create(:url => final_url, :title => title)
+          cu.clean_title
+          cu.computer_classify_for_seo
+          cu.save
+          puts "*** #{index}/#{tus_size}: new record created: #{title}"
+          puts final_url
+          puts cu.computer_classified_seo_status
         else
-          puts "*** skipped (dup)"
+          puts "*** #{index}/#{tus_size}: skipped (dup): #{title}"
         end
 
         tu.crawled = true
