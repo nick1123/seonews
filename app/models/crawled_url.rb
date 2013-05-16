@@ -1,26 +1,43 @@
 class CrawledUrl < ActiveRecord::Base
-  attr_accessible :url, :title, :title_clean
+  attr_accessible :url, :title, :title_clean, :twitter_handle
 
   STATUS_COMPUTER_CLASSIFY_NONE    = 0
   STATUS_COMPUTER_CLASSIFY_SEO     = 1
   STATUS_COMPUTER_CLASSIFY_NOT_SEO = 2
 
-  STATUS_HUMAN_CLASSIFY_NONE    = 0
-  STATUS_HUMAN_CLASSIFY_SEO     = 1
-  STATUS_HUMAN_CLASSIFY_NOT_SEO = 2
-
   def clean_title
     self.title_clean = self.title
+  
+    pipe_begin = self.title_clean.index("|")
+    self.title_clean = self.title[0..(pipe_begin-1)] if pipe_begin
   end
 
   def computer_classify_for_seo
     self.computer_classify_status_id = STATUS_COMPUTER_CLASSIFY_NOT_SEO # Default
-    if self.title.index(/seo/i)
-      self.computer_classify_status_id = STATUS_COMPUTER_CLASSIFY_SEO
+
+    title_modified = self.title_clean.downcase.gsub('linkedin', '')
+    single_keywords = [
+      'algorithm',
+      'link',
+      'page rank',
+      'pagerank',
+      'panda',
+      'penguin',
+      'seo',
+    ]
+
+    single_keywords.each do |single_keyword|
+      if title_modified.index(single_keyword)
+        self.computer_classify_status_id = STATUS_COMPUTER_CLASSIFY_SEO
+        return
+      end
     end
 
-    if self.title.index(/link/i)
-      self.computer_classify_status_id = STATUS_COMPUTER_CLASSIFY_SEO
+    if title_modified.index('google')
+      if title_modified.index('rank') || title_modified.index('authority') || title_modified.index('spam')
+        self.computer_classify_status_id = STATUS_COMPUTER_CLASSIFY_SEO
+        return
+      end
     end
 
   end

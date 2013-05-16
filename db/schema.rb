@@ -16,21 +16,21 @@ ActiveRecord::Schema.define(:version => 20130515165423) do
   create_table "crawled_urls", :force => true do |t|
     t.string   "url"
     t.string   "domain"
+    t.string   "twitter_handle"
     t.string   "title"
     t.string   "title_clean"
-    t.integer  "human_classify_status_id",    :default => 0
     t.integer  "computer_classify_status_id", :default => 0
     t.boolean  "had_problem",                 :default => false
-    t.boolean  "is_processed",                :default => false
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
   end
 
   create_table "twitter_urls", :force => true do |t|
     t.string   "url"
-    t.boolean  "crawled",    :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.string   "twitter_handle"
+    t.boolean  "crawled",        :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
 end
