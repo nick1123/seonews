@@ -1,0 +1,20 @@
+<% @cu.each_with_index do |cu, index| %>
+  <% bgcolor = ((index % 2) == 0) ? 'effaff' : 'ffffff' %>
+  <% bgcolor = 'ffffff' %>
+  <% vote_query = "cu_id=#{cu.id}" %>
+  <div class='post-block' style='background: #<%= bgcolor %>;'>
+    <div class='post-index'>
+      <%= index + 1 %>.
+    </div>
+    <div class='post-title'>
+      <a href="/url_redirect?cu_id=<%= cu.id %>" target="_blank"><%= cu.title_clean.html_safe %></a>
+      <span class='domain'>
+        &nbsp;&nbsp;(<%= cu.domain %>)
+      </span>
+    </div>
+    <div class="info_line">
+
+      Submitted <%= distance_of_time_in_words(cu.created_at, Time.now) %> ago
+    </div>
+  </div>
+<% end %>

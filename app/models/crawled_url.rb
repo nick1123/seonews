@@ -47,4 +47,12 @@ class CrawledUrl < ActiveRecord::Base
     return "SEO? Yes" if self.computer_classify_status_id == STATUS_COMPUTER_CLASSIFY_SEO
     return "SEO? No" if self.computer_classify_status_id == STATUS_COMPUTER_CLASSIFY_NOT_SEO
   end
+
+  def self.last_24_hours
+    time_begin = Time.now
+    time_end = 24.hours.ago
+    #return CrawledUrl.where(:created_at => time_begin..time_end, 
+    #                        :computer_classify_status_id => STATUS_COMPUTER_CLASSIFY_SEO)
+    return CrawledUrl.where(:computer_classify_status_id => STATUS_COMPUTER_CLASSIFY_SEO)
+  end
 end

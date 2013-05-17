@@ -1,0 +1,55 @@
+.post-index
+{
+  font-size: 1.0em;
+  line-height: 1.0em;
+  color: #999;
+  width: 27px;
+/*  border: 1px solid #666;*/
+  float: left;
+}
+
+.domain, .domain a
+{
+  font-size: 0.8em;
+  color: #999;
+}
+
+.post-arrow
+{
+  width: 10px;
+/*  border: 1px solid #666;*/
+  padding-right: 3px;
+  float: left;
+}
+
+.post-title
+{
+  font-size: 1.0em;
+  line-height: 1.0em;
+}
+
+.post-title a:visited
+{
+  color: #999;
+}
+
+.info_line
+{
+  padding-left: 28px;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.post-block
+{
+/*	width: 700px;*/
+	padding: 0.5em;
+/*  border: 1px solid #EEE;*/
+	margin: 0 auto;
+  /*float: left;*/
+}
+
+.post-block:hover 
+{
+	background: #fff;
+}
