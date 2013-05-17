@@ -1,6 +1,8 @@
 class CrawledUrl < ActiveRecord::Base
   attr_accessible :url, :title, :title_clean, :twitter_handle
 
+  POINTS_PER_CLICK = 1
+  
   STATUS_COMPUTER_CLASSIFY_NONE    = 0
   STATUS_COMPUTER_CLASSIFY_SEO     = 1
   STATUS_COMPUTER_CLASSIFY_NOT_SEO = 2
@@ -55,4 +57,11 @@ class CrawledUrl < ActiveRecord::Base
     #                        :computer_classify_status_id => STATUS_COMPUTER_CLASSIFY_SEO)
     return CrawledUrl.where(:computer_classify_status_id => STATUS_COMPUTER_CLASSIFY_SEO)
   end
+
+  def increment_clicks 
+    self.clicks += 1                                                            
+    self.points += POINTS_PER_CLICK                                             
+    self.save 
+  end
+
 end
