@@ -2,7 +2,8 @@ class CrawledUrl < ActiveRecord::Base
   attr_accessible :url, :title, :title_clean, :twitter_handle
 
   POINTS_PER_CLICK = 1
-  
+  POINTS_PER_VOTE  = 100
+
   STATUS_COMPUTER_CLASSIFY_NONE    = 0
   STATUS_COMPUTER_CLASSIFY_SEO     = 1
   STATUS_COMPUTER_CLASSIFY_NOT_SEO = 2
@@ -63,5 +64,17 @@ class CrawledUrl < ActiveRecord::Base
     self.points += POINTS_PER_CLICK                                             
     self.save 
   end
+
+  def vote_down                                                                 
+    self.votes  += 1                                                        
+    self.points  -= POINTS_PER_VOTE                                          
+    self.save                                                                   
+  end                                                                           
+
+  def vote_up                                                                   
+    self.votes  += 1                                                          
+    self.points += POINTS_PER_VOTE                                            
+    self.save                                                                   
+  end                                                                           
 
 end
