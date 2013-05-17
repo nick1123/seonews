@@ -13,6 +13,26 @@
       </span>
     </div>
     <div class="info_line">
+      Vote this
+      <a href="/vote_up?<%= vote_query %>">Up</a>
+      or
+      <a href="/vote_down?<%= vote_query %>">Down</a>
+      &nbsp;&nbsp;
+
+      <span id="votes_<%= cu.id %>">
+        <%= cu.votes %>
+      </span> 
+      Votes &nbsp;&nbsp;
+
+      <span id="votes_<%= cu.id %>">
+        <%= cu.clicks %>
+      </span> 
+      Clicks &nbsp;&nbsp;
+
+      <span id="votes_<%= cu.id %>">
+        <%= cu.points %>
+      </span> 
+      Points &nbsp;&nbsp;
 
       Submitted <%= distance_of_time_in_words(cu.created_at, Time.now) %> ago
     </div>

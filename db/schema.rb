@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515165423) do
+ActiveRecord::Schema.define(:version => 20130517134025) do
 
   create_table "crawled_urls", :force => true do |t|
     t.string   "url"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(:version => 20130515165423) do
     t.boolean  "had_problem",                 :default => false
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
+    t.integer  "clicks",                      :default => 0
+    t.integer  "points",                      :default => 100
+    t.integer  "votes",                       :default => 0
   end
 
   create_table "twitter_urls", :force => true do |t|
