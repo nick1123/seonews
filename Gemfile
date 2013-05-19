@@ -31,7 +31,7 @@ group :development do
   gem 'pry-rails'
 end
 
-
+gem 'rb-readline'
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
