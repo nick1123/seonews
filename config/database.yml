@@ -38,5 +38,5 @@ production:
   database: seonews_production
   pool: 5
   username: root
-  password:
+  password: klg7pC0CuDqTGU
   socket: /var/run/mysqld/mysqld.sock
