@@ -70,6 +70,10 @@ def crawl_urls
           cu.computer_classify_for_seo
           cu.twitter_handle = tu.twitter_handle
           cu.domain = URI.parse(final_url).host
+
+          sd = StatDomain.find_or_create_by_domain(cu.domain)
+          cu.points         = sd.points_avg_seo
+          cu.points_initial = sd.points_avg_seo
           cu.save
           puts "*** #{index}/#{tus_size}: new record created: #{cu.title_clean}"
           puts cu.url
@@ -100,18 +104,16 @@ end
 def compute_stats_domain(cu)
     sd = StatDomain.find_or_create_by_domain(cu.domain)
     sd.total += 1
-    sd.points += cu.points
+    sd.points += (cu.points - cu.points_initial)
 
     if cu.is_seo?
       sd.total_seo += 1
     else
       sd.total_not_seo += 1
     end
+
     sd.compute_averages
     sd.save
-#    puts cu.inspect
-#    puts sd.inspect
-#    puts ""
 end
 
 def compute_stats
