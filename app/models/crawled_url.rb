@@ -22,6 +22,10 @@ class CrawledUrl < ActiveRecord::Base
     self.created_after(24.hours.ago, "points DESC")                         
   end                                                                           
 
+  def self.newest_48_hours                                   
+    self.created_after(48.hours.ago, "created_at DESC")                         
+  end                                                                           
+
   def self.last_week                                          
     order = "created_date DESC, points DESC"                                    
     posts = self.created_after(7.days.ago, order)                   

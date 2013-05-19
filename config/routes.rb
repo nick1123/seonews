@@ -6,6 +6,7 @@ Seonews::Application.routes.draw do
   get "vote_up", to: 'seo#vote_up'
   get "vote_down", to: 'seo#vote_down'
   get "stat_domains", :to => "seo#stat_domains"
+  get "newest", :to => "seo#newest"
 
 
   # Sample of regular route:

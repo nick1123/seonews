@@ -4,6 +4,10 @@ class SeoController < ApplicationController
     @cu = CrawledUrl.last_24_hours
   end
 
+  def newest
+    @cu = CrawledUrl.newest_48_hours
+  end
+
   def stat_domains
     @domains = StatDomain.order("domain ASC")
   end
