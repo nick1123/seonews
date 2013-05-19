@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517134025) do
+ActiveRecord::Schema.define(:version => 20130519165234) do
 
   create_table "crawled_urls", :force => true do |t|
     t.string   "url"
@@ -20,25 +20,37 @@ ActiveRecord::Schema.define(:version => 20130517134025) do
     t.string   "title"
     t.string   "title_clean"
     t.integer  "computer_classify_status_id", :default => 0
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "clicks",                      :default => 0
     t.integer  "points",                      :default => 0
-    t.integer  "points_initial",                      :default => 0
+    t.integer  "points_initial",              :default => 0
     t.integer  "votes",                       :default => 0
   end
 
-  add_index "crawled_urls", ["url"], :name => "index_crawled_urls_on_url"  
+  add_index "crawled_urls", ["url"], :name => "index_crawled_urls_on_url"
+
+  create_table "stat_domains", :force => true do |t|
+    t.string   "domain"
+    t.integer  "total",          :default => 0
+    t.integer  "total_seo",      :default => 0
+    t.integer  "total_not_seo",  :default => 0
+    t.integer  "points",         :default => 0
+    t.integer  "points_avg",     :default => 0
+    t.integer  "points_avg_seo", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
 
   create_table "twitter_urls", :force => true do |t|
     t.string   "url"
     t.string   "twitter_handle"
     t.boolean  "crawled",        :default => false
-    t.boolean  "had_problem",                 :default => false
+    t.boolean  "had_problem",    :default => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
   end
 
-  add_index "twitter_urls", ["url"], :name => "index_twitter_urls_on_url"  
+  add_index "twitter_urls", ["url"], :name => "index_twitter_urls_on_url"
 
 end

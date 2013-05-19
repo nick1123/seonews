@@ -1,0 +1,30 @@
+<%
+  header = <<-eos
+  <tr>
+    <th>Domain</th>
+    <th>Total</th>
+    <th>Total SEO</th>
+    <th>Total Not SEO</th>
+    <th>Points</th>
+    <th>Points Avg</th>
+    <th>Points Avg SEO</th>
+  </tr>
+  eos
+%>
+
+<table border="1">
+  <% @domains.each_with_index do |domain, index| %>
+    <% if index % 20 == 0 %>
+      <%= header.html_safe %>
+    <% end %>
+    <tr>
+      <td><%= domain.domain %></td>
+      <td><%= domain.total %></td>
+      <td><%= domain.total_seo %></td>
+      <td><%= domain.total_not_seo %></td>
+      <td><%= domain.points %></td>
+      <td><%= domain.points_avg %></td>
+      <td><%= domain.points_avg_seo %></td>
+    </tr>
+  <% end %>
+</table>

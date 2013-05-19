@@ -97,7 +97,29 @@ def crawl_urls
   puts "#{CrawledUrl.where(:computer_classify_status_id => ::CrawledUrl::STATUS_COMPUTER_CLASSIFY_SEO).size} SEO Crawled Urls"
 end
 
+def compute_stats_domain(cu)
+    sd = StatDomain.find_or_create_by_domain(cu.domain)
+    sd.total += 1
+    sd.points += cu.points
 
+    if cu.is_seo?
+      sd.total_seo += 1
+    else
+      sd.total_not_seo += 1
+    end
+    sd.compute_averages
+    sd.save
+#    puts cu.inspect
+#    puts sd.inspect
+#    puts ""
+end
+
+def compute_stats
+  StatDomain.delete_all
+  CrawledUrl.all.each do |cu|
+    compute_stats_domain(cu)
+  end
+end
 
 namespace :twitter_crawl do
   desc "crawl twitter profiles and look for new urls"
@@ -110,12 +132,19 @@ namespace :twitter_crawl do
     crawl_urls
   end
 
+  desc "compute stats"
+  task :compute_stats => :environment do
+    compute_stats
+  end
+
   desc "crawl twitter profiles & urls in an infinite loop"
   task :profiles_and_urls => :environment do
     sleep_time = 3_600
     while true do
+      compute_stats
       crawl_profiles
       crawl_urls
+      compute_stats
       puts "sleeping for #{sleep_time} seconds"
       sleep(sleep_time)
     end

@@ -4,6 +4,10 @@ class SeoController < ApplicationController
     @cu = CrawledUrl.last_24_hours
   end
 
+  def stat_domains
+    @domains = StatDomain.order("domain ASC")
+  end
+
   def url_redirect
     cu = CrawledUrl.find(params[:cu_id])                                                                                                                                                                         
     cu.increment_clicks                                                                              

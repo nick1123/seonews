@@ -5,7 +5,9 @@ Seonews::Application.routes.draw do
   get "url_redirect", to: 'seo#url_redirect'
   get "vote_up", to: 'seo#vote_up'
   get "vote_down", to: 'seo#vote_down'
-  
+  get "stat_domains", :to => "seo#stat_domains"
+
+
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
