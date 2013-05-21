@@ -1,11 +1,11 @@
 class SeoController < ApplicationController
 
   def index
-    @cu = CrawledUrl.last_24_hours
+    @cu = CrawledUrl.last_24_hours[0..24]
   end
 
   def newest
-    @cu = CrawledUrl.newest_48_hours
+    @cu = CrawledUrl.newest_48_hours.select {|cu| cu.points >= -10}
   end
 
   def stat_domains
