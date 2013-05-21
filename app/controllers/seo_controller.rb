@@ -1,11 +1,13 @@
 class SeoController < ApplicationController
 
   def index
-    @cu = CrawledUrl.last_24_hours[0..24]
+    @last_24_hours = CrawledUrl.last_24_hours[0..24]
+    @day_ago_1 = CrawledUrl.find(:all, :conditions => ["DATE(created_at) = ?", Date.today-1], :order => "points DESC", :limit => 25)
+    @day_ago_2 = CrawledUrl.find(:all, :conditions => ["DATE(created_at) = ?", Date.today-2], :order => "points DESC", :limit => 25)
   end
 
   def newest
-    @cu = CrawledUrl.newest_48_hours.select {|cu| cu.points >= -10}
+    @cu = CrawledUrl.newest_48_hours
   end
 
   def stat_domains

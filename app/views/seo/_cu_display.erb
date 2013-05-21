@@ -1,6 +1,8 @@
 <% @cu.each_with_index do |cu, index| %>
   <% bgcolor = ((index % 2) == 0) ? 'effaff' : 'ffffff' %>
-  <% bgcolor = 'CCCCCC' if cu.points <= 0 %>
+  <% bgcolor = 'ffffff' %>
+  <% bgcolor = 'DDDDDD' if cu.points == 0 %>
+  <% bgcolor = 'CCCCCC' if cu.points < 0 %>
   <% vote_query = "cu_id=#{cu.id}" %>
   <div class='post-block' style='background: #<%= bgcolor %>;'>
     <div class='post-index'>

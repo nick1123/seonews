@@ -1,2 +1,12 @@
-<h4>Last 24 hours</h4>
+<h3>Top SEO News Last 24 hours</h3>
+<% @cu = @last_24_hours %>
 <%= render 'cu_display' %> 
+
+<h3>Top SEO News for <%= (Date.today-1).inspect %></h3>
+<% @cu = @day_ago_1 %>
+<%= render 'cu_display' %> 
+
+<h3>Top SEO News for <%= (Date.today-2).inspect %></h3>
+<% @cu = @day_ago_2 %>
+<%= render 'cu_display' %> 
+
