@@ -10,8 +10,6 @@ def crawl_profiles
     "rustybrick",
     "sejournal",
     "dan_shure",
-    "seo",
-    "SEO_Web_Design",
     "seobook",
     "sengineland",
     "dannysullivan",
@@ -23,7 +21,7 @@ def crawl_profiles
   url_validator = UrlValidator.new
   handles.each do |handle|
     begin
-      url = "http://search.twitter.com/search.json?q=#{handle}&rpp=100&include_entities=false&result_type=recent"
+      url = "http://search.twitter.com/search.json?q=#{handle}&rpp=20&include_entities=false&result_type=recent"
       html_content, final_url = url_crawler.crawl(url)
       urls_extracted = url_extractor.from_twitter_feed(html_content)
 
@@ -116,10 +114,27 @@ def compute_stats_domain(cu)
     sd.save
 end
 
+def compute_stats_twitter_handle(cu)
+    th = StatTwitterHandle.find_or_create_by_handle(cu.twitter_handle)
+    th.total += 1
+    th.points += (cu.points - cu.points_initial)
+
+    if cu.is_seo?
+      th.total_seo += 1
+    else
+      th.total_not_seo += 1
+    end
+
+    th.compute_averages
+    th.save
+end
+
 def compute_stats
   StatDomain.delete_all
+  StatTwitterHandle.delete_all
   CrawledUrl.all.each do |cu|
     compute_stats_domain(cu)
+    compute_stats_twitter_handle(cu)
   end
 end
 
@@ -138,6 +153,22 @@ namespace :twitter_crawl do
   task :compute_stats => :environment do
     compute_stats
   end
+
+  desc "kill_handle_data"
+  task :kill_handle_data => :environment do
+    handles = [
+      "seo",
+      "SEO_Web_Design",
+    ]
+puts CrawledUrl.count
+    handles.each do |handle|
+      TwitterUrl.delete_all(["twitter_handle = ?", handle])
+      CrawledUrl.delete_all(["twitter_handle = ?", handle])
+    end
+puts CrawledUrl.count
+  end
+
+
 
   desc "crawl twitter profiles & urls in an infinite loop"
   task :profiles_and_urls => :environment do

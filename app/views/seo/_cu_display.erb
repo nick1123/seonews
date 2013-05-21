@@ -36,6 +36,10 @@
       </span> 
       Points &nbsp;&nbsp;
 
+      <% if @show_twitter_handle %>
+        From @<%= cu.twitter_handle %> &nbsp;&nbsp;
+      <% end %>
+
       Submitted <%= distance_of_time_in_words(cu.created_at, Time.now) %> ago
     </div>
   </div>

@@ -8,10 +8,15 @@ class SeoController < ApplicationController
 
   def newest
     @cu = CrawledUrl.newest_48_hours
+    @show_twitter_handle = true
   end
 
   def stat_domains
     @domains = StatDomain.order("domain ASC")
+  end
+
+  def stat_twitter_handles
+    @twitter_handles = StatTwitterHandle.order("handle ASC")
   end
 
   def url_redirect

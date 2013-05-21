@@ -1,0 +1,31 @@
+<%
+  header = <<-eos
+  <tr>
+    <th>Twitter Handle</th>
+    <th>Total</th>
+    <th>Total SEO</th>
+    <th>Total Not SEO</th>
+    <th>Points</th>
+    <th>Points Avg</th>
+    <th>Points Avg SEO</th>
+  </tr>
+  eos
+%>
+
+<table border="1">
+  <% @twitter_handles.each_with_index do |twitter_handle, index| %>
+    <% if index % 20 == 0 %>
+      <%= header.html_safe %>
+    <% end %>
+    <tr>
+      <td><%= twitter_handle.handle %></td>
+      <td><%= twitter_handle.total %></td>
+      <td><%= twitter_handle.total_seo %></td>
+      <td><%= twitter_handle.total_not_seo %></td>
+      <td><%= twitter_handle.points %></td>
+      <td><%= twitter_handle.points_avg %></td>
+      <td><%= twitter_handle.points_avg_seo %></td>
+    </tr>
+  <% end %>
+</table>
+

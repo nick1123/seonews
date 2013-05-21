@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130519165234) do
+ActiveRecord::Schema.define(:version => 20130521172725) do
 
   create_table "crawled_urls", :force => true do |t|
     t.string   "url"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(:version => 20130519165234) do
 
   create_table "stat_domains", :force => true do |t|
     t.string   "domain"
+    t.integer  "total",          :default => 0
+    t.integer  "total_seo",      :default => 0
+    t.integer  "total_not_seo",  :default => 0
+    t.integer  "points",         :default => 0
+    t.integer  "points_avg",     :default => 0
+    t.integer  "points_avg_seo", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "stat_twitter_handles", :force => true do |t|
+    t.string   "handle"
     t.integer  "total",          :default => 0
     t.integer  "total_seo",      :default => 0
     t.integer  "total_not_seo",  :default => 0
